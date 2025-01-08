@@ -2,7 +2,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { useForm, Head, Link } from "@inertiajs/vue3";
+import { useForm, Head } from "@inertiajs/vue3";
+import Chirp from "@/Components/Chirp.vue";
 
 defineProps(["chirps"]);
 
@@ -32,18 +33,8 @@ const form = useForm({
                 <PrimaryButton class="mt-4">Chirp</PrimaryButton>
             </form>
 
-            <div class="mt-6">
-                <!-- in blade we use @foreach ($chirps as $chirp) but in vue istead foreach v-for -->
-
-                <div
-                    v-for="chirp in chirps"
-                    :key="chirp.id"
-                    class="mb-4 p-4 bg-white rounded shadow"
-                >
-                    <div>{{ chirp.user.name }}</div>
-                    <div>{{ chirp.message }}</div>
-                    <div>{{ new Date(chirp.created_at).toLocaleString() }}</div>
-                </div>
+            <div class="mt-6 rounded-lg divide-y">
+                <Chirp v-for="chirp in chirps" :key="chirp.id" :chirp="chirp" />
             </div>
         </div>
     </AuthenticatedLayout>
