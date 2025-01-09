@@ -1,6 +1,7 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import Dropdown from "@/Components/Dropdown.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import InputError from "@/Components/InputError.vue";
@@ -64,11 +65,18 @@ const isEditing = ref(false);
                     </template>
                     <template #content>
                         <button
-                            class="block w-full px-4 py-3 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md focus:bg-gray-100 transition duration-150 ease-in-out"
+                            class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md focus:bg-gray-100 transition duration-150 ease-in-out"
                             @click="isEditing = true"
                         >
                             Edit
                         </button>
+                        <DropdownLink
+                            as="button"
+                            :href="route('chirps.destroy', chirp.id)"
+                            method="delete"
+                        >
+                            Delete
+                        </DropdownLink>
                     </template>
                 </Dropdown>
             </div>
