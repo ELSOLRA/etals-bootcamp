@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Chirp;
+use App\Services\OpenAIservice;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -84,5 +85,16 @@ class ChirpController extends Controller
         $chirp->delete();
 
         return redirect(route('chirps.index'));
+    }
+
+    public function generate(OpenAIservice $openai)
+    {
+        // try and catch because OpenAI API calls might fail
+        try {
+            $chirps = $openai->generateChirps();
+            return response()->json($chirps);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to generate'], 500);
+        }
     }
 }
