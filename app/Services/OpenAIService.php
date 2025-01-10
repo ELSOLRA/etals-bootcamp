@@ -9,7 +9,7 @@ class OpenAIservice
     public function generateChirps(): array
     {
         $prompt =
-            "Generate 3 short social media posts (max 255 characters each) with different tones: 1. Serious 2. Casual 3. Humorous. Format as JSON array with keys: serious, casual, funny";
+            "Generate 3 short social media posts (max 255 characters each) with different tones: 1. Serious 2. Casual 3. Humorous. Format as JSON object with keys: serious, casual, funny";
 
 
         $respones = OpenAI::chat()->create([

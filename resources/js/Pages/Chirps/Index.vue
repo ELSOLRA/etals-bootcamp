@@ -4,12 +4,21 @@ import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { useForm, Head } from "@inertiajs/vue3";
 import Chirp from "@/Components/Chirp.vue";
+import { ref } from "vue";
+import SelectChirpModal from "@/Components/SelectChirpModal.vue";
 
 defineProps(["chirps"]);
 
 const form = useForm({
     message: "",
 });
+
+const showModal = ref(false);
+const testChirps = {
+    serious: "Test serious message",
+    casual: "Test casual message",
+    funny: "Test funny message",
+};
 </script>
 
 <template>
@@ -32,6 +41,15 @@ const form = useForm({
                 <InputError :message="form.errors.message" class="mt-2" />
                 <PrimaryButton class="mt-4">Chirp</PrimaryButton>
             </form>
+            <!-- --------------------Testing--------------------- -->
+            <button @click="showModal = true" class="bg-white">
+                Testing Modal
+            </button>
+            <SelectChirpModal
+                :show="showModal"
+                :chirps="testChirps"
+                @close="showModal = false"
+            />
 
             <div class="mt-6 shadow-sm rounded-lg divide-y">
                 <Chirp v-for="chirp in chirps" :key="chirp.id" :chirp="chirp" />
