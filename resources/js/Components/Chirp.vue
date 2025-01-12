@@ -65,7 +65,7 @@ const isEditing = ref(false);
                     </template>
                     <template #content>
                         <button
-                            class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 rounded-md focus:bg-gray-100 transition duration-150 ease-in-out"
+                            class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-500 rounded-md focus:bg-gray-100 transition duration-150 ease-in-out"
                             @click="isEditing = true"
                         >
                             Edit
@@ -74,6 +74,7 @@ const isEditing = ref(false);
                             as="button"
                             :href="route('chirps.destroy', chirp.id)"
                             method="delete"
+                            class="hover:bg-gray-200"
                         >
                             Delete
                         </DropdownLink>
@@ -96,6 +97,7 @@ const isEditing = ref(false);
                 <InputError :message="form.errors.message" class="mt-2" />
                 <div class="space-x-2">
                     <PrimaryButton class="mt-4">Save</PrimaryButton>
+
                     <button
                         class="mt-4"
                         @click="

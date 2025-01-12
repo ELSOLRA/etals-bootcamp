@@ -34,7 +34,9 @@ defineEmits(["close", "select"]);
                         <div>{{ message }}</div>
                     </div>
                     <div class="mt-6 flex justify-end">
-                        <PrimaryButton @click="$emit('close')"
+                        <PrimaryButton
+                            @click="$emit('close')"
+                            class="dark:hover:bg-gray-500"
                             >Cancel</PrimaryButton
                         >
                     </div>
