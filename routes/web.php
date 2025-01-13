@@ -34,6 +34,7 @@ Route::post('/chirps/generate', [ChirpController::class, 'generate'])
     ->name('chirps.generate')
     ->middleware(['auth', 'verified']);
 
+
 /* Route::get('/chirps/generate', function () {
     $returnValue = OpenAI::chat()->create([
         'model' => 'gpt-3.5-turbo',

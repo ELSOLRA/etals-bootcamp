@@ -7,6 +7,7 @@ import Chirp from "@/Components/Chirp.vue";
 import { ref } from "vue";
 import SelectChirpModal from "@/Components/SelectChirpModal.vue";
 import axios from "axios";
+import SelectModel from "@/Components/SelectModel.vue";
 
 defineProps(["chirps"]);
 
@@ -14,16 +15,23 @@ const form = useForm({
     message: "",
 });
 
+const selectedModel = ref(null);
 const loading = ref(false);
 const showModal = ref(false);
 const generatedChirps = ref(null);
 const error = ref(null);
 
 const generateChirps = async () => {
+    if (!selectedModel.value) {
+        error.value = "Please select a model first";
+        return;
+    }
     loading.value = true;
     error.value = null;
     try {
-        const response = await axios.post(route("chirps.generate"));
+        const response = await axios.post(route("chirps.generate"), {
+            model: selectedModel.value,
+        });
         generatedChirps.value = response.data;
         showModal.value = true;
     } catch (err) {
@@ -68,8 +76,10 @@ const selectChirp = (message) => {
                     >
                         Add Chirp
                     </PrimaryButton>
+
                     <PrimaryButton
                         @click="generateChirps"
+                        type="button"
                         :disabled="loading"
                         class="px-6 py-3 text-lg !focus:ring-0 !focus:ring-offset-0 !focus:ring-indigo-0 !ring-0 !ring-offset-0 dark:focus:bg-gray-700"
                     >
@@ -96,6 +106,7 @@ const selectChirp = (message) => {
                         </svg>
                         {{ loading ? "Generating..." : "Generate AI Chirp" }}
                     </PrimaryButton>
+                    <SelectModel v-model="selectedModel" />
                 </div>
             </form>
 

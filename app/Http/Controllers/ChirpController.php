@@ -87,11 +87,11 @@ class ChirpController extends Controller
         return redirect(route('chirps.index'));
     }
 
-    public function generate(OpenAIservice $openai)
+    public function generate(OpenAIservice $openai, Request $request)
     {
         // try and catch because OpenAI API calls might fail
         try {
-            $chirps = $openai->generateChirps();
+            $chirps = $openai->generateChirps($request->model);
             return response()->json($chirps);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to generate'], 500);
