@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use OpenAI\Laravel\Facades\OpenAI;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,4 +26,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::resource('chirps', ChirpController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+Route::post('/chirps/generate', [ChirpController::class, 'generate'])
+    ->name('chirps.generate')
+    ->middleware(['auth', 'verified']);
+
+
+/* Route::get('/chirps/generate', function () {
+    $returnValue = OpenAI::chat()->create([
+        'model' => 'gpt-3.5-turbo',
+        'messages' => [
+            ['role' => 'user', 'content' => 'Hello!'],
+        ],
+    ]);
+    return $returnValue->choices[0]->message->content;
+}); */
+
+
+require __DIR__ . '/auth.php';
